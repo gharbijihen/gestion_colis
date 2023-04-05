@@ -47,9 +47,9 @@ function App() {
         <Stack.Screen name="Tab" component={Tabnavigation} />
       
         <Stack.Screen name="ADD" component={AddScrenn} />
-       
-        <Stack.Screen name="Map" component={Map} />
 
+        <Stack.Screen name="Map" component={Map} />
+   
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,7 +6,7 @@ import { auth } from "../Services/Auth/Firebase";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import PhoneInput from 'react-phone-number-input'
+
 import { app, db, getFirestore, collection, addDoc } from '../Services/Auth/Firebase'
 export default function SignUpScreen({ navigation }) {
 

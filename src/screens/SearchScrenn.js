@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity, Text, Image, StyleSheet, TextInput, ImageBackground, StatusBar } from "react-native";
-import Chatbox from 'react-native-vector-icons/Ionicons';
-import Searchicon from 'react-native-vector-icons/Fontisto';
 import Arrow from 'react-native-vector-icons/Octicons'
 import AirplaneIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Button from "../components/Button";
+import SelectDropdown from 'react-native-select-dropdown';
+
 
 const SearchScrenn = ({ navigation }) => {
     const [data, setData] = useState([]);
     const [searchText, setSearchText] = useState('');
+    const [selectedAirport, setSelectedAirport] = useState(null);
 
 
     useEffect(() => {
@@ -26,9 +27,14 @@ const SearchScrenn = ({ navigation }) => {
 
             );
             const json = await response.json();
+            var array = []
+            for (let airport of json) {
+                array.push(airport.name)
 
-        setData(json)
-            console.log(json[0].name)
+            }
+
+            setData(array)
+            console.log(json.name)
 
         } catch (error) {
             console.error(error);
@@ -47,7 +53,7 @@ const SearchScrenn = ({ navigation }) => {
 
                     backgroundColor: '#fff',
                     width: '85%',
-                    height: 319,
+                    height: 250,
                     borderRadius: 15,
                     justifyContent: 'center',// Centre verticalement
                     alignItems: 'center', // Centre horizontalement
@@ -59,34 +65,66 @@ const SearchScrenn = ({ navigation }) => {
                 <View style={{
                     alignItems: 'center', top: 10
                 }}>
+                    <SelectDropdown
+                        data={data}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            // text represented after item is selected
+                            // if data array is an array of objects then return selectedItem.property to render after item is selected
+                            return selectedItem
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            // text represented for each item in dropdown
+                            // if data array is an array of objects then return item.property to represent item in dropdown
+                            return item
+                        }}
+                        searchableError={() => <Text>No airport found</Text>}
+                        defaultValue={selectedAirport}
+                        search={true}
+                        searchPlaceHolder={"FROM:Enter your destination"}
+                        buttonStyle={[styles.inputtext, { marginBottom: 15 }]}
+                        searchInputStyle={{paddingLeft:10}}
 
-                    <TextInput
-                        placeholder="FROM:Enter your destination"
-                        style={[styles.inputtext, { marginBottom: 15, }]}
-                        value={searchText}
+                    />
 
-
-                    >
-                    </TextInput>
+              
                     <AirplaneIcon name="airplane-takeoff" size={24} style={styles.icon} color="#000" />
 
 
 
-                    <TextInput
-                        placeholder="TO:Enter your destination"
-                        style={styles.inputtext}
+                  
+                    <SelectDropdown
+                        data={data}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            // text represented after item is selected
+                            // if data array is an array of objects then return selectedItem.property to render after item is selected
+                            return selectedItem
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            // text represented for each item in dropdown
+                            // if data array is an array of objects then return item.property to represent item in dropdown
+                            return item
+                        }}
+                        searchableError={() => <Text>No airport found</Text>}
+                        defaultValue={selectedAirport}
+                        search={true}
+                        searchPlaceHolder={"FROM:Enter your destination"}
+                        buttonStyle={styles.inputtext}
 
-
-                    >
-
-                    </TextInput>
+                    />
                     <AirplaneIcon name="airplane-landing" size={24} color="#000" style={[styles.icon, { top: 80 }]} />
                     <View style={styles.arrow} >
 
                         <Arrow name="arrow-switch" size={24} color="#000" style={{ transform: [{ rotate: '90deg' }], }} />
 
                     </View>
-                    
+
+
 
 
                 </View>
