@@ -1,21 +1,25 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
-import Icon from 'react-native-vector-icons/AntDesign'
-import Icon2 from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/Ionicons'
 import Like from 'react-native-vector-icons/FontAwesome'
 import Seetings from '../screens/Seetings';
 import SearchScrenn from '../screens/SearchScrenn';
 import Icon3 from 'react-native-vector-icons/Ionicons'
-
+import Cards from '../components/Cards';
+import AddScrenn from '../screens/AddScrenn';
 const Tab = createMaterialBottomTabNavigator();
 
 
 function Feed() {
   return (
-   <SearchScrenn></SearchScrenn>
+   <Cards/>
+  );
+}
+function Post() {
+  return (
+   <AddScrenn></AddScrenn>
   );
 }
 
@@ -30,28 +34,33 @@ function Profile() {
 function Notifications() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications!</Text>
+      <Text>like!</Text>
     </View>
   );
 }
 function Seeting() {
   return (
-   <Seetings/>
-   )
+    <Seetings />
+  )
 }
 
 const Tabnavigation = () => {
   return (
     <Tab.Navigator
-      
+      initialRouteName="Feed"
+      activeColor="#3C7EAF"
+      shifting={true}
+      barStyle={{ backgroundColor: '#FFF', }}
+
     >
       <Tab.Screen
         name="Feed"
         component={Feed}
         options={{
           tabBarLabel: 'Search',
-          tabBarIcon: ({ }) => (
-            <Icon2 name="search-location" color='#FFF' size={26} />
+
+          tabBarIcon: ({ color }) => (
+            <Icon3 name="ios-home" color={color} size={26} />
           ),
         }}
       />
@@ -60,37 +69,37 @@ const Tabnavigation = () => {
         component={Notifications}
         options={{
           tabBarLabel: 'Favoris',
-          tabBarIcon: ({ }) => (
-            <Like name="heart" color='#FFF' size={26} />
+          tabBarIcon: ({ color }) => (
+            <Like name="heart" color={color} size={26} />
           ),
-        }}/>
-        <Tab.Screen
+        }} />
+      <Tab.Screen
         name="Post"
-        component={Notifications}
+        component={Post}
         options={{
-          tabBarLabel: 'Feed',
-          tabBarIcon: ({ }) => (
-            <Icon3 name="add-outline" color='#FFF' size={26} />
+          tabBarLabel: 'Add',
+          tabBarIcon: ({ color }) => (
+            <Icon3 name="md-add-circle" color={color} size={28} style={styles.icon} />
           ),
         }}
       />
       <Tab.Screen
-      name="Update"
-      component={Seeting}
-      options={{
-        tabBarLabel: 'Updates',
-        tabBarIcon: ({ }) => (
-          <Icon name="setting" color='#FFF' size={26} />
-        ),
-      }}
-    />
-      <Tab.Screen
-        name="Notificztion"
+        name="Notification"
         component={Notifications}
         options={{
           tabBarLabel: 'Notification',
-          tabBarIcon: ({ }) => (
-            <Icon3 name="notifications" color='#FFF' size={26} />
+          tabBarIcon: ({color }) => (
+            <Icon3 name="notifications" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Update"
+        component={Seeting}
+        options={{
+          tabBarLabel: 'Updates',
+          tabBarIcon: ({ color }) => (
+            <Icon name="settings" color={color} size={26} />
           ),
         }}
       />
@@ -101,3 +110,11 @@ const Tabnavigation = () => {
 
 export default Tabnavigation;
 
+const styles = StyleSheet.create({
+  icon: {
+    flex: 3,
+    //position: "absolute", 
+    //alignSelf: "flex-start",
+
+  },
+})

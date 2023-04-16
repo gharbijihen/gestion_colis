@@ -53,7 +53,7 @@ export default function SignINScreen({ navigation }) {
         </View>
 
         <SafeAreaView style={[styles.view, { top: -40 }]}>
-          <Text style={{ textColor:'#3E4C59', marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Email-adress</Text>
+          <Text style={{ color:'#3E4C59', marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Email-adress</Text>
           
           <TextInput style={[styles.input, { borderColor: brcolor, }]}
            placeholder="Your email adress"
@@ -61,7 +61,7 @@ export default function SignINScreen({ navigation }) {
             value={userEmail}
             keyborardType="email-adress" />
           <Mail name="email" size={20} color="#9AA5B1" style={styles.icon}  />
-          <Text style={{  textColor:'#3E4C59',marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Password</Text>
+          <Text style={{  color:'#3E4C59',marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Password</Text>
           <TextInput style={[styles.input, { borderColor: brcolor, }]}
            placeholder="Enter Password"
             secureTextEntry={true}
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
    icon: {
     position: "absolute",
     top: 54,
-    lignSelf: "flex-start", left: 40,
+    alignSelf: "flex-start", left: 40,
   },
 
 },

@@ -1,13 +1,21 @@
 import { View, Text, StyleSheet, ImageBackground, TextInput } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Arrow from 'react-native-vector-icons/Octicons'
 import AirplaneIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DateComponent from '../components/DateComponent';
 import SliderComponent from '../components/SliderComponent';
 import Button from '../components/Button';
-import ScreenAfterSearch from './ScreenAfterSearch';
+import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 
-export default function AddScrenn({navigation}) {
+
+
+const AddScrenn = () => {
+    const [from, userfrom] = useState("")
+    const [to, userto] = useState("")
+    const [description, setdescription] = useState("")
+    const [kilos, userkilos] = useState("")
+    const [prix, userprix] = useState("")
     return (
         <ImageBackground source={require("../assets/22.png")} resizeMode="cover" style={styles.image}>
             <View style={
@@ -18,11 +26,10 @@ export default function AddScrenn({navigation}) {
                     borderRadius: 15,
                     justifyContent: 'center',// Centre verticalement
                     alignItems: 'center', // Centre horizontalement
-                    top: 3,
+                    top: 20,
                     marginLeft: 4
 
                 }}>
-
                 <View style={{
                     alignItems: 'center', top: 140
                 }}>
@@ -30,19 +37,18 @@ export default function AddScrenn({navigation}) {
                     <TextInput
                         placeholder="FROM:Enter your destination"
                         style={[styles.inputtext, { marginBottom: 15, }]}
+                        onChangeText={txt => userfrom(txt)}
+                        value={from}
                     >
                     </TextInput>
                     <AirplaneIcon name="airplane-takeoff" size={24} style={styles.icon} color="#000" />
 
-
-
                     <TextInput
                         placeholder="TO:Enter your destination"
                         style={styles.inputtext}
-
-                    >
-
-                    </TextInput>
+                        onChangeText={txt => userto(txt)}
+                        value={to}
+                    />
                     <AirplaneIcon name="airplane-landing"
                         size={24} color="#000" style={[styles.icon, { top: 80 }]} />
                     <View style={styles.arrow} >
@@ -51,31 +57,56 @@ export default function AddScrenn({navigation}) {
                             style={{ transform: [{ rotate: '90deg' }], }} />
 
                     </View>
+
                 </View>
                 <View style={{ top: 130 }}>
                     <DateComponent></DateComponent>
                 </View>
-                <View style={{ top: -40 , marginVertical:180}}>
+                <View style={{ top: -40, marginVertical: 180 }}>
                     <SliderComponent />
 
-                    <TextInput placeholder="Description" style={{
-                        height: 50,
-                        zIndex: 1,
-                        margin: 20,
-                        borderWidth: 1,
-                        borderColor:'#8C8C8C',
-                        borderRadius: 15
-                    }}></TextInput>
-                    
+                    <TextInput placeholder="Description" multiline
+                        maxLength={1300} onChangeText={txt => setdescription(txt)}
+                        value={description}
+                        style={{
+                            height: 50,
+                            margin: 20,
+                            borderWidth: 1,
+                            borderColor: '#8C8C8C',
+                            borderRadius: 15
+                        }}>
+
+                    </TextInput>
+
+                    <Button bgcolor={"#81C6ED"} btnLabel={"ADD"}
+                        width={150} Top={80} left={15}
+                    />
+
                 </View>
-               
 
             </View>
 
-            <Button bgcolor={"#81C6ED"} btnLabel={"ADD"} left={10} width={150} press={() => navigation.navigate('After')}></Button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </ImageBackground>
-    );
-};
+    )
+}
 const styles = StyleSheet.create({
     image: {
         flex: 1,
@@ -122,3 +153,5 @@ const styles = StyleSheet.create({
     }
 
 })
+
+export default AddScrenn

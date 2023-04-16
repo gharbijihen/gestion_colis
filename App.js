@@ -11,10 +11,8 @@ import ScreenAfterSearch from './src/screens/ScreenAfterSearch';
 import Seetings from './src/screens/Seetings';
 import SearchScrenn from './src/screens/SearchScrenn';
 import Tabnavigation from './src/Navigations/Tabnavigation';
-import AddScrenn from './src/screens/AddScrenn';
+import AddScrenn from './src/screens/AddScrenn'
 
-
-import Map from './src/helpers/Map';
 
 
 const Stack = createNativeStackNavigator();
@@ -45,10 +43,11 @@ function App() {
         <Stack.Screen name="Search" component={SearchScrenn} />
         <Stack.Screen name="After" component={ScreenAfterSearch} />
         <Stack.Screen name="Tab" component={Tabnavigation} />
+
       
         <Stack.Screen name="ADD" component={AddScrenn} />
+   
 
-        <Stack.Screen name="Map" component={Map} />
    
       </Stack.Navigator>
     </NavigationContainer>

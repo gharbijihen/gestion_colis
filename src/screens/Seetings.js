@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet,TouchableOpacity  } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Image } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Order from 'react-native-vector-icons/Ionicons'
@@ -9,25 +9,33 @@ import Row from 'react-native-vector-icons/SimpleLineIcons'
 
 
 
-export default function Seetings({navigation}) {
 
+const Seetings = ({ navigation }) => {
+  const [profileImage, setProfileImage] = React.useState("");
+
+  
 
   return (
     <View>
-      <View style={styles.container}>
-       
-       {/* <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-          <PassIcon name="chevron-back" size={24} color="black" />
-  </TouchableOpacity>*/}
-      </View>
+      <SafeAreaView style={{ flexDirection: 'row' }}>
+        <TouchableOpacity >
+          <Image source={profileImage} style={{ width: 60, height: 60, top: 140, left: 10 }}  >
+          </Image>
+
+        </TouchableOpacity>
+        <Text style={{ top: 160, left: 20, fontWeight: 'bold' }}> user name</Text>
+
+      </SafeAreaView>
+
       <View style={styles.view}>
 
         <View style={{ top: -80, flexDirection: 'row' }} >
-          <Text style={[styles.txt, { right: 80 }]}>My Profile </Text>
-          <Icon name="user-o" size={28} color='#292D32' style={styles.icon} />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Edit')} >
+            <Text style={[styles.txt, { right: 80 }]}>My Profile </Text>
+            <Icon name="user-o" size={28} color='#292D32' style={styles.icon} />
             <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -128 }]} />
           </TouchableOpacity>
+
         </View >
         <View style={{ top: -55, flexDirection: 'row' }}>
           <Text style={[styles.txt, { right: 83 }]} >My Cards </Text>
@@ -36,6 +44,7 @@ export default function Seetings({navigation}) {
             <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -130 }]} />
           </TouchableOpacity>
         </View>
+
         <View style={{ top: -20, flexDirection: 'row' }}>
           <Text style={[styles.txt, { right: 57 }]}>My Documents</Text>
           <PassIcon name="ios-document-attach-outline" size={34} color='#292D32' style={[styles.icon, { marginRight: 10 }]} />
@@ -51,7 +60,7 @@ export default function Seetings({navigation}) {
           </TouchableOpacity>
         </View>
         <View style={{ top: 220 }}>
-          <Button bgcolor="#81C6ED" textColor='#fff'
+          <Button bgcolor="#81C6ED" textColor='#fff' width={200}
             btnLabel={"Sign out"} marginTop={'40'}
 
           /></View>
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "absolute",
-  alignSelf: "flex-start",
+    alignSelf: "flex-start",
     right: 200,
   },
   txt: {
@@ -87,5 +96,5 @@ const styles = StyleSheet.create({
     marginVertical: 5,
 
   }
-
 })
+export default Seetings
