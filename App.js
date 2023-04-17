@@ -12,6 +12,8 @@ import Seetings from './src/screens/Seetings';
 import SearchScrenn from './src/screens/SearchScrenn';
 import Tabnavigation from './src/Navigations/Tabnavigation';
 import AddScrenn from './src/screens/AddScrenn'
+import EditProfile from './src/screens/EditProfile';
+import Mycards from './src/components/Mycards';
 
 
 
@@ -44,8 +46,9 @@ function App() {
         <Stack.Screen name="After" component={ScreenAfterSearch} />
         <Stack.Screen name="Tab" component={Tabnavigation} />
 
-      
+        <Stack.Screen name="Edit" component={EditProfile} />
         <Stack.Screen name="ADD" component={AddScrenn} />
+        <Stack.Screen name="Mycard" component={Mycards} />
    
 
    

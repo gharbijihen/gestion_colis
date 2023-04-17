@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Order from 'react-native-vector-icons/Ionicons'
@@ -6,14 +6,16 @@ import Card from 'react-native-vector-icons/EvilIcons'
 import PassIcon from 'react-native-vector-icons/Ionicons'
 import Button from '../components/Button'
 import Row from 'react-native-vector-icons/SimpleLineIcons'
+import { useNavigation } from '@react-navigation/native'
+import Mycards from '../components/Mycards'
 
 
 
 
-const Seetings = ({ navigation }) => {
+const Seetings = ({ }) => {
   const [profileImage, setProfileImage] = React.useState("");
+  const navigation = useNavigation();
 
-  
 
   return (
     <View>
@@ -38,11 +40,11 @@ const Seetings = ({ navigation }) => {
 
         </View >
         <View style={{ top: -55, flexDirection: 'row' }}>
-          <Text style={[styles.txt, { right: 83 }]} >My Cards </Text>
-          <Card name="credit-card" size={34} color='#292D32' style={[styles.icon, { marginRight: -10 }]} />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('Mycard')}>
+            <Text style={[styles.txt, { right: 83 }]} >My Cards </Text>
             <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -130 }]} />
           </TouchableOpacity>
+          <Card name="credit-card" size={34} color='#292D32' style={[styles.icon, { marginRight: -10 }]} />
         </View>
 
         <View style={{ top: -20, flexDirection: 'row' }}>

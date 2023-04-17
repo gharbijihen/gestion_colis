@@ -1,34 +1,35 @@
-import { SafeAreaView } from 'react-native';
-import { View, Text, TouchableOpacity } from 'react-native'
-import { Searchbar } from 'react-native-paper';
-import * as React from 'react';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
+import { useNavigation } from '@react-navigation/native';
+import Header from '../components/Header';
+const Chat = () => {
+  const navigation = useNavigation();
+  const [messages, setMessages] = useState([]);
 
-import { GiftedChat, Message } from "react-native-gifted-chat"
-
-import Icon from 'react-native-vector-icons/Feather'
-
-export default function Chat() {
-  const [searchQuery, setSearchQuery] = React.useState('');
-
-  const onChangeSearch = query => setSearchQuery(query);
-
-
+  const onSend = (newMessages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages));
+  };
 
   return (
-    <SafeAreaView>
-      <TouchableOpacity>
-        <Icon name="log-out" size={24} color={'#707991'} style={{ marginRight: 10 }} />
-      </TouchableOpacity>
-      <Searchbar
-                        placeholder="Search"
-                        onChangeText={onChangeSearch}
-                        value={searchQuery}
-                    />
+    <View style={styles.container}>
 
-      <GiftedChat/>
+      <GiftedChat
+        messages={messages}
+        onSend={newMessages => onSend(newMessages)}
+        user={{ _id: 1 }}
+      >
 
 
-      
-    </SafeAreaView>
-  )
-}
+      </GiftedChat>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
+export default Chat;

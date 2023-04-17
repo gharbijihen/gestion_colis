@@ -5,15 +5,18 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import FlightIcon from 'react-native-vector-icons/MaterialIcons'
 
 import { TouchableOpacity } from 'react-native'
-import { BottomSheet, ListItem } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native'
 import { Avatar } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native';
 
-const Cards = ({ navigation }) => {
+
+
+const Cards = () => {
+    const navigation = useNavigation();
     return (
 
         <View style={{ flex: 1, alignItems: 'center', paddingVertical: 80 }}>
+           
             <View style={styles.view}>
                 <TouchableOpacity>
                     <Icon1 name="hearto" size={26} style={[styles.icon, { top: -20, left: 140 }]} />
