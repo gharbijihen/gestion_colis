@@ -6,13 +6,14 @@ import Card from 'react-native-vector-icons/EvilIcons'
 import PassIcon from 'react-native-vector-icons/Ionicons'
 import Button from '../components/Button'
 import Row from 'react-native-vector-icons/SimpleLineIcons'
+import { useNavigation } from '@react-navigation/native';
+import Mycard from '../components/Mycards'
 
 
 
-
-const Seetings = ({ navigation }) => {
+const Seetings = () => {
   const [profileImage, setProfileImage] = React.useState("");
-
+  const navigation = useNavigation(); 
   
 
   return (
@@ -38,9 +39,9 @@ const Seetings = ({ navigation }) => {
 
         </View >
         <View style={{ top: -55, flexDirection: 'row' }}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Mycard')}>
           <Text style={[styles.txt, { right: 83 }]} >My Cards </Text>
           <Card name="credit-card" size={34} color='#292D32' style={[styles.icon, { marginRight: -10 }]} />
-          <TouchableOpacity>
             <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -130 }]} />
           </TouchableOpacity>
         </View>

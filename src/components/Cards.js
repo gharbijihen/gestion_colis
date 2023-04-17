@@ -10,7 +10,8 @@ import { SafeAreaView } from 'react-native'
 import { Avatar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native';
 
-const Cards = ({ navigation }) => {
+const Cards = () => {
+    const navigation = useNavigation();
     return (
 
         <View style={{ flex: 1, alignItems: 'center', paddingVertical: 80 }}>
