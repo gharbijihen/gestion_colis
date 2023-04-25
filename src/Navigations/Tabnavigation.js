@@ -9,12 +9,18 @@ import SearchScrenn from '../screens/SearchScrenn';
 import Icon3 from 'react-native-vector-icons/Ionicons'
 import Cards from '../components/Cards';
 import AddScrenn from '../screens/AddScrenn';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 const Tab = createMaterialBottomTabNavigator();
 
 
 function Feed() {
   return (
+  <View>
+    <TouchableOpacity style={{left:320,top:40}}>
+    <Icon3 name='ios-search-circle' size={48} />
+    </TouchableOpacity>
    <Cards/>
+   </View>
   );
 }
 function Post() {

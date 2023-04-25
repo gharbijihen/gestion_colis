@@ -4,10 +4,10 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import Header from './Header';
 const Mycards = () => {
-    const navigation = useNavigation(); 
+  const navigation = useNavigation();
   return (
     <View>
-        <Header title={"Add card"}button={"Save"}></Header>
+      <Header title={"Add card"} button={"Save"}></Header>
       <CardField
         postalCodeEnabled={true}
         placeholders={{
@@ -20,7 +20,7 @@ const Mycards = () => {
         style={{
           width: '100%',
           height: 50,
-          marginVertical: 30,top:30
+          marginVertical: 30, top: 30
         }}
         onCardChange={(cardDetails) => {
           console.log('cardDetails', cardDetails);
@@ -35,4 +35,3 @@ const Mycards = () => {
 
 
 export default Mycards
-   

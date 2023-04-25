@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, Text, Image, StyleSheet, TextInput, ImageBackground, StatusBar } from "react-native";
+import { View,  ScrollView , Text, Image, StyleSheet, TextInput, ImageBackground } from "react-native";
 import Arrow from 'react-native-vector-icons/Octicons'
 import AirplaneIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Button from "../components/Button";
@@ -44,10 +44,11 @@ const SearchScrenn = ({ navigation }) => {
 
 
     return (
+       
 
         <ImageBackground source={require("../assets/22.png")}
             resizeMode="cover" style={styles.image}>
-            <StatusBar barStyle={"light-content"} color='#FFF' />
+             <ScrollView style={styles.scrollView}>
             <View style={
                 {
 
@@ -57,7 +58,7 @@ const SearchScrenn = ({ navigation }) => {
                     borderRadius: 15,
                     justifyContent: 'center',// Centre verticalement
                     alignItems: 'center', // Centre horizontalement
-                    top: -100,
+                   
                     marginLeft: 4
 
                 }}>
@@ -134,8 +135,9 @@ const SearchScrenn = ({ navigation }) => {
 
 
             </View>
-
+            </ScrollView>
         </ImageBackground>
+       
 
 
     );
@@ -144,14 +146,22 @@ const SearchScrenn = ({ navigation }) => {
 export default SearchScrenn;
 
 const styles = StyleSheet.create({
+    scrollView: {
+        backgroundColor: 'transparent',
+        flex:1,
+      
+     
+      },
     image: {
-        flex: 1,
+        
         justifyContent: 'center',
         width: '100%',
         height: '110%',
         marginLeft: 20,
         paddingHorizontal: 20,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        
+
 
     },
 

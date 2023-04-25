@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Order from 'react-native-vector-icons/Ionicons'
@@ -13,8 +13,8 @@ import Mycard from '../components/Mycards'
 
 const Seetings = () => {
   const [profileImage, setProfileImage] = React.useState("");
-  const navigation = useNavigation(); 
-  
+  const navigation = useNavigation();
+
 
   return (
     <View>
@@ -39,9 +39,9 @@ const Seetings = () => {
 
         </View >
         <View style={{ top: -55, flexDirection: 'row' }}>
-        <TouchableOpacity onPress={()=>navigation.navigate('Mycard')}>
-          <Text style={[styles.txt, { right: 83 }]} >My Cards </Text>
-          <Card name="credit-card" size={34} color='#292D32' style={[styles.icon, { marginRight: -10 }]} />
+          <TouchableOpacity onPress={() => navigation.navigate('Mycard')}>
+            <Text style={[styles.txt, { right: 83 }]} >My Cards </Text>
+            <Card name="credit-card" size={34} color='#292D32' style={[styles.icon, { marginRight: -10 }]} />
             <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -130 }]} />
           </TouchableOpacity>
         </View>
@@ -54,13 +54,15 @@ const Seetings = () => {
           </TouchableOpacity>
         </View>
         <View style={{ top: 20, flexDirection: 'row' }}>
-          <Text style={[styles.txt, { right: 80 }]}>My order </Text>
-          <Order name="time-outline" size={34} color='#292D32' style={[styles.icon, { marginRight: -20 }]} />
-          <TouchableOpacity>
-            <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -130 }]} />
+          <TouchableOpacity onPress={() => navigation.navigate('Order')}>
+            <Text style={[styles.txt, { right: 80 }]}>My order </Text>
+            <Order name="time-outline" size={34}
+             color='#292D32' style={[styles.icon, { marginRight: -20 }]} />
+            <Row name="arrow-right" size={26} color='#292D32'
+             style={[styles.icon, { right: -130 }]} />
           </TouchableOpacity>
         </View>
-        <View style={{ top: 220 }}>
+        <View style={{ top: 180 }}>
           <Button bgcolor="#81C6ED" textColor='#fff' width={200}
             btnLabel={"Sign out"} marginTop={'40'}
 
