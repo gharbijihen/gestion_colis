@@ -15,7 +15,7 @@ import AddScrenn from './src/screens/AddScrenn'
 import EditProfile from './src/screens/EditProfile';
 import Mycards from './src/components/Mycards';
 import Api from './src/screens/Api';
-import { store } from './src/screens/Store';
+import { store } from './src/app/Store';
 import { Provider } from 'react-redux'
  //bch najam nwafar store l les component lkol
 
@@ -35,11 +35,10 @@ const AuthenticatedUserProvider = ({ children }) => {
 function App() {
 
   return (
-
+    <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcme"
           screenOptions={{ headerShown: false }} >
-
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen name="Sign IN" component={SignINScreen} />
@@ -49,14 +48,10 @@ function App() {
           <Stack.Screen name="Search" component={SearchScrenn} />
           <Stack.Screen name="After" component={ScreenAfterSearch} />
           <Stack.Screen name="Tab" component={Tabnavigation} />
-
-      
-        <Stack.Screen name="ADD" component={AddScrenn} />
-   
-
-   
+          <Stack.Screen name="ADD" component={AddScrenn} />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 
