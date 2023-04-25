@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, TextInput } from 'react-native'
+import { View, Text, StyleSheet, ScrollView ,ImageBackground, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Arrow from 'react-native-vector-icons/Octicons'
 import AirplaneIcon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -17,8 +17,11 @@ const AddScrenn = () => {
     const [description, setdescription] = useState("")
     const [kilos, userkilos] = useState("")
     const [prix, userprix] = useState("")
+    const [data, setData] = useState([]);
+    const [searchText, setSearchText] = useState('');
     const [selectedAirport, setSelectedAirport] = useState(null);
-    const [data, setData] = useState([])
+
+
     useEffect(() => {
         getMoviesFromApiAsync()
     }, []);
@@ -49,130 +52,119 @@ const AddScrenn = () => {
     };
     return (
         <ImageBackground source={require("../assets/22.png")} resizeMode="cover" style={styles.image}>
-            <View style={
-                {
-                    backgroundColor: '#fff',
-                    width: '85%',
-                    height: 600,
-                    borderRadius: 15,
-                    justifyContent: 'center',// Centre verticalement
-                    alignItems: 'center', // Centre horizontalement
-                    top: 20,
-                    marginLeft: 4
+            <ScrollView style={styles.scrollView}>
+                <View style={
+                    {
+                        backgroundColor: '#fff',
+                        width: '85%',
+                        height: 600,
+                        borderRadius: 15,
+                        justifyContent: 'center',// Centre verticalement
+                        alignItems: 'center', // Centre horizontalement
+                        marginLeft: 4
 
-                }}>
-                <View style={{
-                    alignItems: 'center', top: 160
-                }}>
+                    }}>
+                    <View style={{
+                        alignItems: 'center', top: 140
+                    }}>
+                        <SelectDropdown
+                            data={data}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                            searchableError={() => <Text>No airport found</Text>}
+                            defaultValue={selectedAirport}
+                            search={true}
+                            searchPlaceHolder={"FROM:Enter your destination"}
+                            buttonStyle={[styles.inputtext, { marginBottom: 15 }]}
+                            searchInputStyle={{ paddingLeft: 10 }}
 
-                    <SelectDropdown
-                        data={data}
-                        onSelect={(selectedItem, index) => {
-                            console.log(selectedItem, index)
-                        }}
-                        buttonTextAfterSelection={(selectedItem, index) => {
-                            // text represented after item is selected
-                            // if data array is an array of objects then return selectedItem.property to render after item is selected
-                            return selectedItem
-                        }}
-                        rowTextForSelection={(item, index) => {
-                            // text represented for each item in dropdown
-                            // if data array is an array of objects then return item.property to represent item in dropdown
-                            return item
-                        }}
-                        searchableError={() => <Text>No airport found</Text>}
-                        defaultValue={selectedAirport}
-                        search={true}
-                        searchPlaceHolder={"FROM:Enter your destination"}
-                        buttonStyle={[styles.inputtext, { marginBottom: 15 }]}
-                        searchInputStyle={{ paddingLeft: 10 }}
+                        />
 
-                    />
 
-                    <AirplaneIcon name="airplane-takeoff" size={24} style={styles.icon} color="#000" />
+                        <AirplaneIcon name="airplane-takeoff" size={24} style={styles.icon} color="#000" />
 
-                    <SelectDropdown
-                        data={data}
-                        onSelect={(selectedItem, index) => {
-                            console.log(selectedItem, index)
-                        }}
-                        buttonTextAfterSelection={(selectedItem, index) => {
-                            // text represented after item is selected
-                            // if data array is an array of objects then return selectedItem.property to render after item is selected
-                            return selectedItem
-                        }}
-                        rowTextForSelection={(item, index) => {
-                            // text represented for each item in dropdown
-                            // if data array is an array of objects then return item.property to represent item in dropdown
-                            return item
-                        }}
-                        searchableError={() => <Text>No airport found</Text>}
-                        defaultValue={selectedAirport}
-                        search={true}
-                        searchPlaceHolder={"FROM:Enter your destination"}
-                        buttonStyle={[styles.inputtext, { marginBottom: 15 }]}
-                        searchInputStyle={{ paddingLeft: 10 }}
+                        <SelectDropdown
+                            data={data}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                            searchableError={() => <Text>No airport found</Text>}
+                            defaultValue={selectedAirport}
+                            search={true}
+                            searchPlaceHolder={"FROM:Enter your destination"}
+                            buttonStyle={[styles.inputtext, { marginBottom: 15 }]}
+                            searchInputStyle={{ paddingLeft: 10 }}
 
-                    />
-                    <AirplaneIcon name="airplane-landing"
-                        size={24} color="#000" style={[styles.icon, { top: 80 }]} />
-                    <View style={styles.arrow} >
-                        <Arrow name="arrow-switch"
-                            size={24} color="#000"
-                            style={{ transform: [{ rotate: '90deg' }], }} />
+                        />
+
+                        <AirplaneIcon name="airplane-landing"
+                            size={24} color="#000" style={[styles.icon, { top: 85 }]} />
+                        <View style={styles.arrow} >
+                            <Arrow name="arrow-switch"
+                                size={24} color="#000"
+                                style={{ transform: [{ rotate: '90deg' }], }} />
+
+                        </View>
+
+                    </View>
+                    <View style={{ top: 130 }}>
+                        <DateComponent></DateComponent>
+                    </View>
+                    <View style={{ top: -40, marginVertical: 180 }}>
+                        <SliderComponent />
+
+                        <TextInput placeholder="Description" multiline
+                            maxLength={1300} onChangeText={txt => setdescription(txt)}
+                            value={description}
+                            style={{
+                                height: 50,
+                                margin: 20,
+                                borderWidth: 1,
+                                borderColor: '#8C8C8C',
+                                borderRadius: 15
+                            }}>
+
+                        </TextInput>
+
+                        <Button bgcolor={"#81C6ED"} btnLabel={"ADD"}
+                            width={150} Top={80} left={15}
+                        />
 
                     </View>
 
                 </View>
-                <View style={{ top: 130 }}>
-                    <DateComponent></DateComponent>
-                </View>
-                <View style={{ top: -40, marginVertical: 180 }}>
-                    <SliderComponent />
-
-                    <TextInput placeholder="Description" multiline
-                        maxLength={1300} onChangeText={txt => setdescription(txt)}
-                        value={description}
-                        style={{
-                            height: 50,
-                            margin: 20,
-                            borderWidth: 1,
-                            borderColor: '#8C8C8C',
-                            borderRadius: 15
-                        }}>
-
-                    </TextInput>
-
-                    <Button bgcolor={"#81C6ED"} btnLabel={"ADD"}
-                        width={150} Top={80} left={15}
-                    />
-
-                </View>
-
-            </View>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </ScrollView>
 
         </ImageBackground>
     )
 }
 const styles = StyleSheet.create({
+    scrollView: {
+        backgroundColor: 'transparent',
+        flex:1,
+        top:30
+    },
     image: {
         flex: 1,
         justifyContent: 'center',
@@ -196,10 +188,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingLeft: 40,
         shadowOpacity: 0.32,
+        top:10
     },
     icon: {
         position: "absolute",
-        top: 8,
+        top: 20,
         alignSelf: "flex-start", left: 10
     },
     arrow: {

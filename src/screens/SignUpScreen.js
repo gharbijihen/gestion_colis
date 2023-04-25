@@ -1,4 +1,4 @@
-import { Image, View, SafeAreaView, StyleSheet, Text, TouchableOpacity, TextInput, } from 'react-native'
+import { View, SafeAreaView, StyleSheet, Text, TouchableOpacity, TextInput, } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import Background from '../components/Background';
 import Button from '../components/Button';
@@ -8,9 +8,11 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import { app, db, getFirestore, collection, addDoc } from '../Services/Auth/Firebase'
+import { ScrollView } from 'react-native-gesture-handler';
 export default function SignUpScreen({ navigation }) {
 
   const [username, setUsername] = useState("")
+  const [userlastname, setUserlastname] = useState("")
   const [userEmail, setUserEmail] = useState("")
   const [password, setPassword] = useState("")
   const [usernumber, setUserNumber] = useState("")
@@ -23,9 +25,9 @@ export default function SignUpScreen({ navigation }) {
         alert("Passwords don't match.")
 
       if (userEmail !== "" && password !== "")
-          createUserWithEmailAndPassword(auth, userEmail, password).then(() =>
-            navigation.navigate("Seetings")
-          ).catch((err) => Alert.alert("login error", err))
+        createUserWithEmailAndPassword(auth, userEmail, password).then(() =>
+          navigation.navigate("Seetings")
+        ).catch((err) => Alert.alert("login error", err))
 
       console.log("userEmail", userEmail)
       console.log("password", password)
@@ -86,16 +88,15 @@ export default function SignUpScreen({ navigation }) {
           <Icon name="user-o" size={80} color="#060606" style={{ marginLeft: 35, marginVertical: 30 }} />
         </View>
 
-
-        <SafeAreaView style={[styles.view, { marginVertical: 20, top: 10 }]}>
+        <ScrollView style={{ top: -70, left: 30, backgroundColor: 'transparent' }}>
           <TextInput style={styles.inputtxt}
             placeholder="First Name"
             onChangeText={txt => setUsername(txt)}
             value={username} />
-            <TextInput style={styles.inputtxt}
+          <TextInput style={styles.inputtxt}
             placeholder="Last Name"
-            onChangeText={txt => setUsername(txt)}
-            value={username} />
+            onChangeText={txt => setUserlastname(txt)}
+            value={userlastname} />
           <TextInput placeholder="Your email adress"
             onChangeText={txt => setUserEmail(txt)}
             value={userEmail}
@@ -103,10 +104,6 @@ export default function SignUpScreen({ navigation }) {
             style={styles.inputtxt}
 
           />
-          {/*<PhoneInput
-            placeholder="Enter phone number"
-            value={usernumber}
-      onChangeText={txt => setUserNumber(txt)} />*/}
           <TextInput placeholder="Contact Number" keyboardType="numeric" style={styles.inputtxt}
             onChangeText={txt => setUserNumber(txt)}
             value={usernumber} />
@@ -117,28 +114,34 @@ export default function SignUpScreen({ navigation }) {
             onChangeText={txt => setPassword(txt)} />
           <TextInput placeholder="Confirm Password" style={styles.inputtxt}
             labelValue={confirmPassword}
+            value={confirmPassword}
             secureTextEntry={true}
             onChangeText={txt => setConfirmPassword(txt)} />
-        </SafeAreaView>
-        <SafeAreaView style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          top:30
-        }}>
 
-          <Button
-            bgcolor="#81C6ED" textColor='#ffff' btnLabel={"CREAT YOUR ACCOUNT"}
-            press={registerUser} width={240}/>
 
-          <View style={{ display: 'flex', flexDirection: 'row' }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Already have an account ?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Sign IN')}>
-              <Text style={{ color: '#81C6ED', fontWeight: 'bold', fontSize: 16 }}>
-                Login</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
+          <SafeAreaView style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            right: 30,
+            top:-5
+          }}>
+
+            <Button
+              bgcolor="#81C6ED" textColor='#ffff' btnLabel={"CREAT YOUR ACCOUNT"}
+              press={registerUser} width={240} />
+
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Already have an account ?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Sign IN')}>
+                <Text style={{ color: '#81C6ED', fontWeight: 'bold', fontSize: 16 }}>
+                  Login</Text>
+              </TouchableOpacity>
+
+            </View>
+          </SafeAreaView>
+        </ScrollView>
+
       </View>
     </Background>
 

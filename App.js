@@ -14,7 +14,10 @@ import Tabnavigation from './src/Navigations/Tabnavigation';
 import AddScrenn from './src/screens/AddScrenn'
 import EditProfile from './src/screens/EditProfile';
 import Mycards from './src/components/Mycards';
-
+import Api from './src/screens/Api';
+import { store } from './src/screens/Store';
+import { Provider } from 'react-redux'
+ //bch najam nwafar store l les component lkol
 
 
 const Stack = createNativeStackNavigator();
@@ -30,25 +33,25 @@ const AuthenticatedUserProvider = ({ children }) => {
 
 }
 function App() {
- 
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Search"
-        screenOptions={{ headerShown:false}} >
 
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Start" component={StartScreen} />
-        <Stack.Screen name="Sign IN" component={SignINScreen} />
-        <Stack.Screen name="Sign UP" component={SignUpScreen} />
-        <Stack.Screen name="Seetings" component={Seetings} />
-        <Stack.Screen name="Chat" component={Chat} />
-        <Stack.Screen name="Search" component={SearchScrenn} />
-        <Stack.Screen name="After" component={ScreenAfterSearch} />
-        <Stack.Screen name="Tab" component={Tabnavigation} />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcme"
+          screenOptions={{ headerShown: false }} >
 
-        <Stack.Screen name="Edit" component={EditProfile} />
+          <Stack.Screen name="Welcome" component={Welcome} />
+          <Stack.Screen name="Start" component={StartScreen} />
+          <Stack.Screen name="Sign IN" component={SignINScreen} />
+          <Stack.Screen name="Sign UP" component={SignUpScreen} />
+          <Stack.Screen name="Seetings" component={Seetings} />
+          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen name="Search" component={SearchScrenn} />
+          <Stack.Screen name="After" component={ScreenAfterSearch} />
+          <Stack.Screen name="Tab" component={Tabnavigation} />
+
+      
         <Stack.Screen name="ADD" component={AddScrenn} />
-        <Stack.Screen name="Mycard" component={Mycards} />
    
 
    

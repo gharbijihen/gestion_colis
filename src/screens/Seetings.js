@@ -6,13 +6,12 @@ import Card from 'react-native-vector-icons/EvilIcons'
 import PassIcon from 'react-native-vector-icons/Ionicons'
 import Button from '../components/Button'
 import Row from 'react-native-vector-icons/SimpleLineIcons'
-import { useNavigation } from '@react-navigation/native'
-import Mycards from '../components/Mycards'
+import { useNavigation } from '@react-navigation/native';
+import Mycard from '../components/Mycards'
 
 
 
-
-const Seetings = ({ }) => {
+const Seetings = () => {
   const [profileImage, setProfileImage] = React.useState("");
   const navigation = useNavigation();
 
@@ -40,8 +39,9 @@ const Seetings = ({ }) => {
 
         </View >
         <View style={{ top: -55, flexDirection: 'row' }}>
-          <TouchableOpacity onPress={()=>navigation.navigate('Mycard')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Mycard')}>
             <Text style={[styles.txt, { right: 83 }]} >My Cards </Text>
+            <Card name="credit-card" size={34} color='#292D32' style={[styles.icon, { marginRight: -10 }]} />
             <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -130 }]} />
           </TouchableOpacity>
           <Card name="credit-card" size={34} color='#292D32' style={[styles.icon, { marginRight: -10 }]} />
@@ -55,13 +55,15 @@ const Seetings = ({ }) => {
           </TouchableOpacity>
         </View>
         <View style={{ top: 20, flexDirection: 'row' }}>
-          <Text style={[styles.txt, { right: 80 }]}>My order </Text>
-          <Order name="time-outline" size={34} color='#292D32' style={[styles.icon, { marginRight: -20 }]} />
-          <TouchableOpacity>
-            <Row name="arrow-right" size={26} color='#292D32' style={[styles.icon, { right: -130 }]} />
+          <TouchableOpacity onPress={() => navigation.navigate('Order')}>
+            <Text style={[styles.txt, { right: 80 }]}>My order </Text>
+            <Order name="time-outline" size={34}
+             color='#292D32' style={[styles.icon, { marginRight: -20 }]} />
+            <Row name="arrow-right" size={26} color='#292D32'
+             style={[styles.icon, { right: -130 }]} />
           </TouchableOpacity>
         </View>
-        <View style={{ top: 220 }}>
+        <View style={{ top: 180 }}>
           <Button bgcolor="#81C6ED" textColor='#fff' width={200}
             btnLabel={"Sign out"} marginTop={'40'}
 

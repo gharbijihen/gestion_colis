@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Imageµ } from 'react-native'
 import React, { useState } from 'react'
 import Icon1 from 'react-native-vector-icons/AntDesign'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FlightIcon from 'react-native-vector-icons/MaterialIcons'
-
+import Button from './Button'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native'
@@ -19,23 +19,33 @@ const Cards = () => {
            
             <View style={styles.view}>
                 <TouchableOpacity>
-                    <Icon1 name="hearto" size={26} style={[styles.icon, { top: -20, left: 140 }]} />
+                    <Icon1 name="hearto" size={26} style={[styles.icon, { top: 10, left: 140 }]} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Chat')} >
-                    <Icon name='chatbox-ellipses-outline' size={26} style={[styles.icon, { top: -47, left: 100 }]} />
-                </TouchableOpacity>
+               
 
-                <Text style={{ top: -70, right: 120 }}>Depart on{ } </Text>
-
-                <View style={{ marginHorizontal: 5, right: 130, top: 55 }}>
+                <Text style={{ top: -20, right: 120 }}>Depart on{ } </Text>
+                <View style={{
+                    top:85,
+                    borderWidth:0.2,
+                   borderColor:"#D6D6D6",
+                    alignSelf: 'stretch'
+                }} />
+                <View style={{ marginHorizontal: 5, right: 130, top: 90 }}>
                     <TouchableOpacity onPress={() => console.log("work")}>
                         <Avatar.Image size={45} source={require('../assets/jj.jpg')} />
                     </TouchableOpacity>
+                    
                 </View>
+                <SafeAreaView style={{top:40,left:90}}>
+                    <Button press={() => navigation.navigate('Chat')} bgcolor={'#5C9AE0'}  btnLabel='send request' width={110}  onPress={()=>navigation.navigate("Chat")}/>
+                </SafeAreaView>
+                
 
-                <SafeAreaView style={{ top: -82 }}>
+
+                <SafeAreaView style={{ top: -102 }}>
                     <FlightIcon name='flight' size={40} color="#000" style={{ transform: [{ rotate: '90deg' }], }} />
                 </SafeAreaView>
+
 
             </View>
 
@@ -52,7 +62,7 @@ const Cards = () => {
                     <Icon name='chatbox-ellipses-outline' size={26} style={[styles.icon, { top: -87, left: 100 }]} />
                 </TouchableOpacity>
             </View>
-        </View>
+        </View >
     )
 }
 const styles = StyleSheet.create({

@@ -35,12 +35,14 @@ const EditProfile = () => {
 
 export default EditProfile
 const styles = StyleSheet.create({
-    inputtxt: {
-        width: 380,
-        alignSelf: 'center',
-        backgroundColor: 'transparent',
-        top: 50,
-        borderColor: '#8C8C8C',
-        marginVertical: 10
-    },
+    inputtxt:{
+        backgroundColor:'transparent',
+        marginVertical:10,
+        width:360,
+        alignSelf:'center',
+        top:15,
+        
+   
+        
+    }
 })
