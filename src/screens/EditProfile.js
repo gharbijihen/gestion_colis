@@ -5,13 +5,17 @@ import Header from '../components/Header';
 import { Avatar } from 'react-native-paper';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
+
+
 const EditProfile = () => {
+ 
     const navigation = useNavigation();
   return (
     <View>
       <Header title={"Edit profile"} button={"Done"}></Header>
       <Avatar.Image size={98} style={{top:30,alignSelf:'center',marginVertical:15}}source={require('../assets/jj.jpg')} />
-      <TouchableOpacity>
+      <TouchableOpacity> 
       <Text style={{fontWeight:500,color:'#4CB1F9',alignSelf:'center',top:28}}>Edit picture</Text>
       </TouchableOpacity>
       <TextInput  label="First name" activeUnderlineColor='green' underlineColor='#C1C1C1' style={styles.inputtxt}></TextInput>

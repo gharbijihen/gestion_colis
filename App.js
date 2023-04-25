@@ -16,7 +16,8 @@ import EditProfile from './src/screens/EditProfile';
 import Mycards from './src/components/Mycards';
 import Api from './src/screens/Api';
 import { store } from './src/screens/Store';
-import { Provider } from 'react-redux'
+import Order from './src/Navigations/Order';
+
  //bch najam nwafar store l les component lkol
 
 
@@ -36,9 +37,8 @@ function App() {
 
   return (
  
-    <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcme"
+        <Stack.Navigator initialRouteName="Tab"
           screenOptions={{ headerShown: false }} >
 
           <Stack.Screen name="Welcome" component={Welcome} />
@@ -55,11 +55,12 @@ function App() {
           <Stack.Screen name="ADD" component={AddScrenn} />
           <Stack.Screen name="Mycard" component={Mycards} />
           <Stack.Screen name="Api" component={Api} />
+          <Stack.Screen name="Order" component={Order} />
 
 
         </Stack.Navigator>
       </NavigationContainer>
-      </Provider>
+
  
   );
 }
