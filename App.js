@@ -15,8 +15,10 @@ import AddScrenn from './src/screens/AddScrenn'
 import EditProfile from './src/screens/EditProfile';
 import Mycards from './src/components/Mycards';
 import Api from './src/screens/Api';
-import { store } from './src/screens/Store';
+import { store } from './src/app/Store';
 import { Provider } from 'react-redux'
+import Order from './src/Navigations/Order';
+
  //bch najam nwafar store l les component lkol
 
 
@@ -35,11 +37,10 @@ const AuthenticatedUserProvider = ({ children }) => {
 function App() {
 
   return (
-
+    <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcme"
+        <Stack.Navigator initialRouteName="Tab"
           screenOptions={{ headerShown: false }} >
-
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen name="Sign IN" component={SignINScreen} />
@@ -49,14 +50,17 @@ function App() {
           <Stack.Screen name="Search" component={SearchScrenn} />
           <Stack.Screen name="After" component={ScreenAfterSearch} />
           <Stack.Screen name="Tab" component={Tabnavigation} />
+          <Stack.Screen name="ADD" component={AddScrenn} />
+          <Stack.Screen name="Mycard" component={Mycards} />
+          <Stack.Screen name="Api" component={Api} />
+          <Stack.Screen name="Order" component={Order} />
 
-      
-        <Stack.Screen name="ADD" component={AddScrenn} />
-   
 
-   
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
+      </Provider>
+
+ 
   );
 }
 
