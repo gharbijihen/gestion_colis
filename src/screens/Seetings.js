@@ -19,11 +19,7 @@ const Seetings = () => {
   return (
     <View>
       <SafeAreaView style={{ flexDirection: 'row' }}>
-        <TouchableOpacity >
-          <Image source={profileImage} style={{ width: 60, height: 60, top: 140, left: 10 }}  >
-          </Image>
-
-        </TouchableOpacity>
+      
         <Text style={{ top: 160, left: 20, fontWeight: 'bold' }}> user name</Text>
 
       </SafeAreaView>
