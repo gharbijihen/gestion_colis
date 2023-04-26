@@ -15,7 +15,7 @@ export default function StartScreen({ navigation }) {
           width: 325, top: 20,
           height: 350,
           resizeMode: 'contain',
-          margin: 25,
+          margin: 25,left:10
         }} />
       <SafeAreaView>
         <Image source={require('../assets/HOMEAVION.png')}
