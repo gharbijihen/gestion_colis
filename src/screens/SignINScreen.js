@@ -3,36 +3,67 @@ import Button from '../components/Button';
 import { Text, View, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import Background from '../components/Background'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Mail from 'react-native-vector-icons/Fontisto'
-import { auth } from "../Services/Auth/Firebase";
-import { signInWithEmailAndPassword } from 'firebase/auth';
-
+import Icon2 from 'react-native-vector-icons/Fontisto'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { auth } from "../Services/Auth/Firebase";
+// import { signInWithEmailAndPassword } from 'firebase/auth';
+// import { login } from '../features/auth/authSlice';
+import axios from 'axios';
+import { API_URL } from '../helpers/Api';
 export default function SignINScreen({ navigation }) {
 
-  const [userEmail, setUserEmail] = useState("")
+  const [passwordVisible, setPasswordVisible] = useState(true);
+
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [brcolor, setbrcolor] = useState("#c1c1c1")
 
-  const handleSignin = () => {
-    if (userEmail === "") {
-      setbrcolor("#FF1111")
-    } else {
-      setbrcolor("#C1C1C1")
+  // const handleSignin = () => {
+  //   if (email === "") {
+  //     setbrcolor("#FF1111")
+  //   } else {
+  //     setbrcolor("#C1C1C1")
+  //   }
+  //   if (email !== "" && password !== "") {
+
+  //     signInWithEmailAndPassword(auth, email, password).then(() =>
+
+  //     navigation.navigate("Tab")
+  //   ).catch((err) => Alert.alert("wrong email/password plais try egain"))
+  //   console.log("email", email)
+  //   console.log("password", password)
+  // }
+  // }
+  async function _storeUser(id) {
+    console.log(id)
+    try {
+      await AsyncStorage.setItem('userId', id + "")
+    } catch (e) {
+      // Error saving data
     }
-    if (userEmail !== "" && password !== "") {
-
-      signInWithEmailAndPassword(auth, userEmail, password).then(() =>
-
-      navigation.navigate("Search")
-    ).catch((err) => Alert.alert("wrong email/password plais try egain"))
-    console.log("userEmail", userEmail)
-    console.log("password", password)
-  }
-
-
-
-
-  }
+  };
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    let data = {
+      email: email,
+      password: password
+    };
+    const headers = {
+      'Accept': 'application/json',
+    }
+    try {
+      const response = await axios.post(`${API_URL}/users/login`, data, { headers: headers })
+      console.log(response.data)
+      if (response.data.message === "login avec success") {
+        _storeUser(response.data.user.UUid)
+        navigation.navigate('Tab')
+      } else {
+        Alert.alert(response.data.message)
+      }
+    } catch (error) {
+      console.log('error', error.message);
+    };
+  };
 
   return (
 
@@ -53,21 +84,21 @@ export default function SignINScreen({ navigation }) {
         </View>
 
         <SafeAreaView style={[styles.view, { top: -40 }]}>
-          <Text style={{ color:'#3E4C59', marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Email-adress</Text>
-          
+          <Text style={{ color: '#3E4C59', marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Email-adress</Text>
+
           <TextInput style={[styles.input, { borderColor: brcolor, }]}
-           placeholder="Your email adress"
-            onChangeText={(userEmail) => setUserEmail(userEmail)}
-            value={userEmail}
+            placeholder="Your email adress"
+            onChangeText={(email) => setEmail(email)}
+            value={email}
             keyborardType="email-adress" />
-          <Mail name="email" size={20} color="#9AA5B1" style={styles.icon}  />
-          <Text style={{  color:'#3E4C59',marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Password</Text>
+          <Icon2 name="email" size={20} color="#9AA5B1" style={[styles.icon,{top: 54,}]} />
+          <Text style={{ color: '#3E4C59', marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Password</Text>
           <TextInput style={[styles.input, { borderColor: brcolor, }]}
-           placeholder="Enter Password"
+            placeholder="Enter Password"
             secureTextEntry={true}
             value={password}
             onChangeText={(password) => setPassword(password)} />
-
+          <Icon2 name="locked" size={20} color="#9AA5B1" style={[styles.icon,{top: 151,}]} />
           <TouchableOpacity style={{ alignItems: 'flex-end', width: '78%', paddingRight: 16 }}>
             <Text style={{ color: "#81C6ED", fontWeight: 'bold', fontSize: 16 }}>
               Forgot Pasword?
@@ -101,14 +132,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignItems: 'center',
-    
+
 
 
   },
   input: {
     elevation: 9,
     color: '#c1c1c1',
-    paddingHorizontal: 25, width: '80%', 
+    paddingHorizontal: 25, width: '80%',
     backgroundColor: '#ffff',
     marginVertical: 10,
     borderRadius: 15,
@@ -117,9 +148,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 30,
   },
-   icon: {
+  icon: {
     position: "absolute",
-    top: 54,
+
     alignSelf: "flex-start", left: 40,
   },
 

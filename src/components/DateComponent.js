@@ -6,12 +6,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import SearchScrenn from "../screens/SearchScrenn";
 //import { TextInput } from "react-native-paper";
 
-export default function DateComponent() {
+export default function DateComponent({dateAller,dateRetour,setDate1,setDate2}) {
 
     const [datePicker, setDatePicker] = useState(false);
 
-    const [dateAller, setDate1] = useState(new Date());
-    const [dateRetour, setDate2] = useState(new Date());
+
 
     const [timePicker, setTimePicker] = useState(false);
 

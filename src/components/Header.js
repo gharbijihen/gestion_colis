@@ -29,7 +29,7 @@ const Header = ({title,button}) => {
             <Ionicons name="arrow-left" size={22} color="#FF5864" onPress={createThreeButtonAlert} style={{top:20,left:10}} />
         </TouchableOpacity>
         <Text style={{alignSelf:'center', top:18,left:28, fontSize:18 , fontWeight:'400', color:"black"}}>{title}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity >
           <Text style={{ top:18,left:220, fontSize:18 , fontWeight:'400', color:"#33A4F8"}}>{button}</Text>
         </TouchableOpacity>
     

@@ -1,56 +1,47 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
+import { View, Text, StyleSheet, TouchableOpacity, Image,ScrollView,SafeAreaView } from 'react-native'
+import React, { useEffect } from 'react'
+import Button from '../components/Button';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Like from 'react-native-vector-icons/FontAwesome'
-import Seetings from '../screens/Seetings';
-import SearchScrenn from '../screens/SearchScrenn';
-import Icon3 from 'react-native-vector-icons/Ionicons'
-import Cards from '../components/Cards';
+import { Searchbar } from 'react-native-paper';
+import Icon1 from 'react-native-vector-icons/AntDesign'
+import { Avatar } from 'react-native-paper'
+import Seeting from '../screens/Seetings';
 import AddScrenn from '../screens/AddScrenn';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Home from '../screens/Home';
+import { useState } from 'react';
+import axios from 'axios';
+import { API_URL } from '../helpers/Api';
+import Favoris from '../screens/Favoris';
+
 const Tab = createMaterialBottomTabNavigator();
 
 
-function Feed() {
+function ChatBox() {
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const onChangeSearch = query => setSearchQuery(query);
   return (
-  <View>
-    <TouchableOpacity style={{left:320,top:40}}>
-    <Icon3 name='ios-search-circle' size={48} />
-    </TouchableOpacity>
-   <Cards/>
-   </View>
-  );
-}
-function Post() {
-  return (
-   <AddScrenn></AddScrenn>
-  );
-}
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
+    <View>
+      <View style={{ flex: 1, top: 8, alignSelf: "center" }}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={{ width: 380, height: 48, backgroundColor: '#C1C1C1' }}
+        />
+      </View>
+      <Image style={{ top: 100, width: 400, height: 550 }} source={require('../assets/Chat.png')} />
     </View>
+
   );
 }
 
-function Notifications() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>like!</Text>
-    </View>
-  );
-}
-function Seeting() {
-  return (
-    <Seetings />
-  )
-}
 
-const Tabnavigation = () => {
+const Tabnavigation = ({ route, navigation }) => {
+
+
+
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -60,19 +51,19 @@ const Tabnavigation = () => {
 
     >
       <Tab.Screen
-        name="Feed"
-        component={Feed}
+        name="Home"
+        component={Home} 
         options={{
-          tabBarLabel: 'Search',
+          tabBarLabel: 'Home',
 
           tabBarIcon: ({ color }) => (
-            <Icon3 name="ios-home" color={color} size={26} />
+            <Icon name="ios-home" color={color} size={26} />
           ),
         }}
       />
-      <Tab.Screen
-        name="Favoris"
-        component={Notifications}
+      <Tab.Screen 
+        name="Like"
+        component={Favoris}
         options={{
           tabBarLabel: 'Favoris',
           tabBarIcon: ({ color }) => (
@@ -81,21 +72,21 @@ const Tabnavigation = () => {
         }} />
       <Tab.Screen
         name="Post"
-        component={Post}
+        component={AddScrenn}
         options={{
           tabBarLabel: 'Add',
           tabBarIcon: ({ color }) => (
-            <Icon3 name="md-add-circle" color={color} size={28} style={styles.icon} />
+            <Icon name="md-add-circle" color={color} size={28} style={styles.icon} />
           ),
         }}
       />
       <Tab.Screen
-        name="Notification"
-        component={Notifications}
+        name="chat"
+        component={ChatBox}
         options={{
-          tabBarLabel: 'Notification',
-          tabBarIcon: ({color }) => (
-            <Icon3 name="notifications" color={color} size={26} />
+          tabBarLabel: 'Chat',
+          tabBarIcon: ({ color }) => (
+            <Icon name="chatbox-ellipses" color={color} size={26} />
           ),
         }}
       />
@@ -117,10 +108,27 @@ const Tabnavigation = () => {
 export default Tabnavigation;
 
 const styles = StyleSheet.create({
-  icon: {
-    flex: 3,
-    //position: "absolute", 
-    //alignSelf: "flex-start",
+  view: {
+    flex: 1,
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    height: 202,
+    width: 330,
+    borderRadius: 15,
+    justifyContent: 'center',
+    borderColor: '#000',
+    borderWidth: 1,
+    shadowRadius: 5.46,
+    elevation: 9,
+    borderColor: '#FFF',
+    marginVertical: 20
 
-  },
+
+},
+icon: {
+    display: 'flex',
+    alignSelf: 'flex-end',
+
+}
 })

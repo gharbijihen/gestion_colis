@@ -1,109 +1,109 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import Header from '../components/Header';
+
 import { Avatar } from 'react-native-paper';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-
+import { API_URL } from '../helpers/Api';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import Ionicons from 'react-native-vector-icons/SimpleLineIcons'
+import axios from 'axios';
 
 const EditProfile = () => {
-  const [singleFile, setSingleFile] = useState(null);
-
-  const uploadImage = async () => {
-    // Check if any file is selected or not
-    if (singleFile != null) {
-      // If file selected then create FormData
-      const fileToUpload = singleFile;
-      const data = new FormData();
-      data.append('name', 'Image Upload');
-      data.append('file_attachment', fileToUpload);
-      // Please change file upload URL
-      let res = await fetch(
-        'http://localhost/upload.php',
-        {
-          method: 'post',
-          body: data,
-          headers: {
-            'Content-Type': 'multipart/form-data; ',
-          },
-        }
-      );
-      let responseJson = await res.json();
-      if (responseJson.status == 1) {
-        alert('Upload Successful');
-      }
-    } else {
-      // If no file selected the show alert
-      alert('Please Select File first');
-    }
-  };
-
-  const selectFile = async () => {
-    // Opening Document Picker to select one file
-    try {
-      const res = await DocumentPicker.pick({
-        // Provide which type of file you want user to pick
-        type: [DocumentPicker.types.allFiles],
-        // There can me more options as well
-        // DocumentPicker.types.allFiles
-        // DocumentPicker.types.images
-        // DocumentPicker.types.plainText
-        // DocumentPicker.types.audio
-        // DocumentPicker.types.pdf
-      });
-      // Printing the log realted to the file
-      console.log('res : ' + JSON.stringify(res));
-      // Setting the state to show single file attributes
-      setSingleFile(res);
-    } catch (err) {
-      setSingleFile(null);
-      // Handling any exception (If any)
-      if (DocumentPicker.isCancel(err)) {
-        // If user canceled the document selection
-        alert('Canceled');
-      } else {
-        // For Unknown Error
-        alert('Unknown Error: ' + JSON.stringify(err));
-        throw err;
-      }
-    }
-  };
+  const [lastname, setUserlastname] = useState("")
+  const [firstname, setUserfirstname] = useState("")
+  const [email, setUserEmail] = useState("")
+  const [phone, setUserNumber] = useState("")
 
   const navigation = useNavigation();
+  const [singleFile, setSingleFile] = useState(null);
+  
+
+  const updateProfil = async () => {
+    const userId = await AsyncStorage.getItem('userId')
+  
+    const headers = {
+      'Accept': 'application/json',
+    };
+    const dataupdate = {
+      firstname: firstname,
+      lastname: lastname,
+      phone: phone,
+      email: email
+    };
+    try {
+      const { response } = await axios.patch(`${API_URL}/users/update/${userId}`, dataupdate, { headers: headers })
+      .then(navigation.navigate("Update"))
+
+    }
+    catch (error) {
+      console.log('error', error.message);
+    };
+  }
+
+
+  const Header = ({ title, button }) => {
+    const createThreeButtonAlert = () =>
+      Alert.alert('Discard changes?', 'if you go back now, you will lose your changes', [
+        {
+          text: 'Discard changes',
+          onPress: () => navigation.goBack(),
+
+        },
+        {
+          text: 'Keep editing',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+
+        },
+
+      ]);
+
+    const navigation = useNavigation()
+    return (
+      <View style={{ alignContent: 'flex-start', }}>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity on Press={() => navigation.goBack()}>
+            <Ionicons name="arrow-left" size={22} color="#FF5864" onPress={createThreeButtonAlert} style={{ top: 20, left: 10 }} />
+          </TouchableOpacity>
+          <Text style={{ alignSelf: 'center', top: 18, left: 28, fontSize: 18, fontWeight: '400', color: "black" }}>{title}</Text>
+          <TouchableOpacity onPress={updateProfil} >
+            <Text style={{ top: 18, left: 220, fontSize: 18, fontWeight: '400', color: "#33A4F8" }}>Done</Text>
+          </TouchableOpacity>
+
+        </View>
+      </View>
+    )
+  }
+
+
   return (
-    <View>
-      <Header title={"Edit profile"} button={"Done"}></Header>
+    <ScrollView>
+      <Header title={"Edit profile"} ></Header>
       <Avatar.Image size={98} style={{ top: 30, alignSelf: 'center', marginVertical: 15 }} source={require('../assets/jj.jpg')} />
-      {singleFile != null ? (
-        <Text style={styles.textStyle}>
-          File Name: {singleFile.name ? singleFile.name : ''}
-          {'\n'}
-          Type: {singleFile.type ? singleFile.type : ''}
-          {'\n'}
-          File Size: {singleFile.size ? singleFile.size : ''}
-          {'\n'}
-          URI: {singleFile.uri ? singleFile.uri : ''}
-          {'\n'}
-        </Text>
-      ) : null}
-      <TouchableOpacity
 
-        activeOpacity={0.5}
-        onPress={selectFile}>
-        <Text >Select File</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={uploadImage}>
+       <TouchableOpacity>
         <Text style={{ fontWeight: 500, color: '#4CB1F9', alignSelf: 'center', top: 28 }}>Edit picture</Text>
       </TouchableOpacity>
-      <TextInput label="First name" activeUnderlineColor='green' underlineColor='#C1C1C1' style={styles.inputtxt}></TextInput>
-      <TextInput label="Last name" activeUnderlineColor='green' underlineColor='#C1C1C1' style={styles.inputtxt}></TextInput>
-      <TextInput label="Email" activeUnderlineColor='green' underlineColor='#C1C1C1' style={styles.inputtxt}></TextInput>
-      <TextInput label="Phne Number" activeUnderlineColor='green' keyboardType="numeric" underlineColor='#C1C1C1' style={styles.inputtxt}></TextInput>
-    </View>
+      <TextInput label="First name" activeUnderlineColor='green'
+        underlineColor='#C1C1C1' style={styles.inputtxt}
+        value={firstname} 
+        onChangeText={(text) => setUserfirstname(text)}
+      ></TextInput>
+      <TextInput label="Last name" activeUnderlineColor='green' underlineColor='#C1C1C1' style={styles.inputtxt}
+        value={lastname}
+        onChangeText={txt => setUserlastname(txt)}
+        ></TextInput>
+      <TextInput label="Email" activeUnderlineColor='green' underlineColor='#C1C1C1'   onChangeText={txt => setUserEmail(txt)}
+      style={styles.inputtxt} value={email}
+      ></TextInput>
+      <TextInput label="Phne Number" activeUnderlineColor='green' keyboardType="numeric" value={phone}
+       underlineColor='#C1C1C1' style={styles.inputtxt}
+       onChangeText={txt => setUserNumber(txt)}></TextInput> 
+    
+    </ScrollView>
   )
 }
 

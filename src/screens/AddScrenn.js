@@ -1,30 +1,67 @@
-import { View, Text, StyleSheet, ScrollView ,ImageBackground, TextInput } from 'react-native'
+import { View, Text, StyleSheet, ScrollView ,ImageBackground, TextInput,Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Arrow from 'react-native-vector-icons/Octicons'
 import AirplaneIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DateComponent from '../components/DateComponent';
 import SliderComponent from '../components/SliderComponent';
 import Button from '../components/Button';
-
+import axios from 'axios';
+import { API_URL } from '../helpers/Api';
 import SelectDropdown from 'react-native-select-dropdown';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 
 const AddScrenn = () => {
-    const [from, userfrom] = useState("")
-    const [to, userto] = useState("")
+    const navigation = useNavigation()
+    const [from, setfrom] = useState("")
+    const [to, setto] = useState("")
     const [description, setdescription] = useState("")
-    const [kilos, userkilos] = useState("")
-    const [prix, userprix] = useState("")
-    const [data, setData] = useState([]);
-    const [searchText, setSearchText] = useState('');
+    const [poids, setPoids] = useState(10);
+    const [price, setPrice] = useState(10);
+    const [data, setData] = useState([])
+
     const [selectedAirport, setSelectedAirport] = useState(null);
 
+    const [dateAller, setDate1] = useState(new Date());
+    const [dateRetour, setDate2] = useState(new Date());
 
     useEffect(() => {
         getMoviesFromApiAsync()
     }, []);
 
+    const Addcolis = async (e) => {
+        const value = await AsyncStorage.getItem('userId')
+        console.log("aaaa",value)
+        e.preventDefault();
+        let data = {
+          from:from,
+          to:to,
+          description:description,
+          poidDispo:poids,
+          price:price,
+          date1:dateAller,
+          date2:dateRetour,
+          userId:value,
+        };
+        console.log(data)
+        const headers = {
+          'Accept': 'application/json',
+        }
+
+        try {
+           
+          const response = await axios.post(`${API_URL}/colis/add`, data, { headers: headers })
+          console.log(response.data)
+            if(response.data.message=== "colis Created"){
+            navigation.navigate('MyModal')
+        Alert.alert("your colis is created")
+            }
+        } catch (error) {
+          console.log('error', error.message);
+        };
+      };
+  
 
     const getMoviesFromApiAsync = async () => {
         try {
@@ -70,6 +107,7 @@ const AddScrenn = () => {
                             data={data}
                             onSelect={(selectedItem, index) => {
                                 console.log(selectedItem, index)
+                                setfrom(selectedItem)
                             }}
                             buttonTextAfterSelection={(selectedItem, index) => {
                                 // text represented after item is selected
@@ -97,6 +135,8 @@ const AddScrenn = () => {
                             data={data}
                             onSelect={(selectedItem, index) => {
                                 console.log(selectedItem, index)
+                                setto(selectedItem)
+
                             }}
                             buttonTextAfterSelection={(selectedItem, index) => {
                                 // text represented after item is selected
@@ -128,10 +168,10 @@ const AddScrenn = () => {
 
                     </View>
                     <View style={{ top: 130 }}>
-                        <DateComponent></DateComponent>
+                        <DateComponent dateAller={dateAller} dateRetour={dateRetour} setDate1={setDate1}setDate2={setDate2}></DateComponent>
                     </View>
                     <View style={{ top: -40, marginVertical: 180 }}>
-                        <SliderComponent />
+                        <SliderComponent price={price} poids={poids} setPoids={setPoids} setPrice={setPrice} />
 
                         <TextInput placeholder="Description" multiline
                             maxLength={1300} onChangeText={txt => setdescription(txt)}
@@ -147,7 +187,7 @@ const AddScrenn = () => {
                         </TextInput>
 
                         <Button bgcolor={"#81C6ED"} btnLabel={"ADD"}
-                            width={150} Top={80} left={15}
+                            width={150} Top={80} left={15} press={Addcolis}
                         />
 
                     </View>

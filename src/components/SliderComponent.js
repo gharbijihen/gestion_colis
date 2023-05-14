@@ -4,17 +4,16 @@ import { View, StyleSheet, Text } from 'react-native';
  
 import Slider from '@react-native-community/slider';
  
-export default function SliderComponent() {
+export default function SliderComponent({poids,price,setPoids,setPrice}) {
  
-  const [data1, setSliderData1] = useState(10);
-  const [data2, setSliderData2] = useState(10);
+
   return (
     <View style={styleSheet.MainContainer}>
  
       
  
       <Text style={{ fontSize: 16 }}>
-      Poids disponible : {data1} kg 
+      Available weight : {poids} kg 
       </Text>
  
       <Slider
@@ -24,15 +23,15 @@ export default function SliderComponent() {
         maximumTrackTintColor="#D9D9D9"
         
         step={1}
-        value={data1}
+        value={poids}
         onValueChange={
-          (sliderValue) => setSliderData1(sliderValue)
+          (sliderValue) => setPoids(sliderValue)
         }
         thumbTintColor="#81C6ED"
         style={{width: 300, height: 40}}/>
         
       <Text style={{ fontSize: 16 }}>
-      Poids disponible : {data2} dinare
+      Price/KG : {price} dinare
       </Text>
  
       <Slider
@@ -42,9 +41,9 @@ export default function SliderComponent() {
         maximumTrackTintColor="#D9D9D9"
         
         step={1}
-        value={data2}
+        value={price}
         onValueChange={
-          (sliderValue) => setSliderData2(sliderValue)
+          (sliderValue) => setPrice(sliderValue)
         }
         thumbTintColor="#81C6ED"
         style={{width: 300, height: 40}}
