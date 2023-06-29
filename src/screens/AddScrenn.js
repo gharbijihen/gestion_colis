@@ -31,9 +31,9 @@ const AddScrenn = () => {
     }, []);
 
     const Addcolis = async (e) => {
+        e.preventDefault();
         const value = await AsyncStorage.getItem('userId')
         console.log("aaaa",value)
-        e.preventDefault();
         let data = {
           from:from,
           to:to,
@@ -50,12 +50,20 @@ const AddScrenn = () => {
         }
 
         try {
-           
           const response = await axios.post(`${API_URL}/colis/add`, data, { headers: headers })
           console.log(response.data)
-            if(response.data.message=== "colis Created"){
-            navigation.navigate('MyModal')
-        Alert.alert("your colis is created")
+            if(response.data.message=== "colis Created")
+            { ToastAndroid.showWithGravityAndOffset(
+                'colis Created!',
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50
+            ); 
+            navigation.navigate('Home')
+        // Alert.alert("your colis is created")
+            }else if(response.data.message === "passport dosn't exist"){
+                Alert.alert("verify passport")
             }
         } catch (error) {
           console.log('error', error.message);
@@ -67,7 +75,7 @@ const AddScrenn = () => {
         try {
             console.log("json")
             const response = await fetch(
-                'https://8y04y.mocklab.io/json/1', {
+                'https://kg5w9.mocklab.io/json/1', {
                 method: 'Get',
             }
 

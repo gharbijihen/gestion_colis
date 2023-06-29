@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Modal, StyleSheet, Alert, Text, Pressable, SafeAreaView, ScrollView, } from 'react-native'
+import { View, TouchableOpacity, Modal,RefreshControl,StyleSheet, Alert, Text, Pressable, SafeAreaView, ScrollView, } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Cards from '../components/Cards';
 import Icon3 from 'react-native-vector-icons/Ionicons'
@@ -10,14 +10,16 @@ import SelectDropdown from 'react-native-select-dropdown';
 import axios from 'axios';
 import { API_URL } from '../helpers/Api';
 import { TextInput } from 'react-native-gesture-handler';
+import { Image } from 'react-native';
 
-export default function Home({ navigation }) {
+export default function Home({ navigation,route }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [data, setData] = useState([]);
-    const [searchText, setSearchText] = useState('');
     const [selectedAirport1, setSelectedAirport1] = useState(null);
     const [selectedAirport2, setSelectedAirport2] = useState(null);
     const [dataSearch, setDataSearch] = useState([]);
+
+    const iduser = route.params.userId
 
     const searchColis = async (e) => {
         e.preventDefault();
@@ -46,7 +48,7 @@ export default function Home({ navigation }) {
         try {
             console.log("json")
             const response = await fetch(
-                'https://8y04y.mocklab.io/json/1', {
+                'https://kg5w9.mocklab.io/json/1', {
                 method: 'Get',
             }
 
@@ -68,16 +70,19 @@ export default function Home({ navigation }) {
 
 
 
+
     return (
+        
         <SafeAreaView style={{ flex: 1 }}>
-
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-                <Icon3 name='ios-search-circle' style={{ left: 300 }} size={48} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate("Notification")}>
-                <Icon3 name="notifications" style={{ left: 350, top: -40 }} size={26} />
-            </TouchableOpacity>
-
+            <View style={{backgroundColor:"#FFFF",height:60,flexDirection: 'row',}}>
+                <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                    <Icon3 name='md-search-sharp' style={{ left: 310 ,top:9,color:"#137DC5"}} size={29} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
+                    <Icon3 name="notifications" style={{left: 320 ,top: 10,color:"#137DC5" }} size={26} />
+                </TouchableOpacity>
+                <Image source={require('../assets/LOGO_TUnisfiwt.png')} style={{ right: 70, width:180, height: 120, top: -35 }}></Image>
+            </View>
             <ScrollView style={styles.scrollView}>
 
 

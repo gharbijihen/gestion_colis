@@ -1,87 +1,107 @@
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, SafeAreaView, TouchableOpacity, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Icon1 from 'react-native-vector-icons/SimpleLineIcons'
-import Icon from 'react-native-vector-icons/Fontisto'
+import Icon3 from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon2 from 'react-native-vector-icons/MaterialIcons'
 import FlightIcon from 'react-native-vector-icons/MaterialIcons'
-import { TouchableOpacity } from 'react-native'
-import { SafeAreaView } from 'react-native'
-import { Avatar } from 'react-native-paper'
-
-import Header from '../components/Header'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import Icon from 'react-native-vector-icons/Fontisto'
+import Icon4 from 'react-native-vector-icons/Ionicons'
 import axios from 'axios'
 import { API_URL } from '../helpers/Api'
+import ConfirmeScreen from './ConfirmeScreen'
+import InfoMyColis from '../screens/InfoMyColis'
 
 
 
-export default function Order({ navigation }) {
+
+
+
+export default function Order({ navigation, route }) {
+
+    const id = route.params.userId
     const [data, setData] = useState([])
-    useEffect(() => {
-        const userId = AsyncStorage.getItem('userId')
-        console.log(userId)
+console.log("iduser",id)
+
+
+    const fetchData = () => {
         const headers = {
             'Accept': 'application/json',
         }
-        axios.get(`${API_URL}/colis/getbyid/${userId}`, { headers: headers })
+        console.log("colis gett ")
+        axios.get(`${API_URL}/colis/getallcolibyid/${id}`, { headers: headers })
             .then(res => {
-                console.log(res.data, 'dattataaaaaaa');
+                console.log(res.data, 'dattataaaaaaa=>>>');
                 setData(res.data)
             })
 
+    }
+    useEffect(() => {
+        fetchData()
+        const interval = setInterval(() => {
+            fetchData()
+        }, 5000);
+        return () => clearInterval(interval);
+
 
     }, [])
+
+
+
     return (
 
         <ScrollView >
-            <Header title={"My orders"}></Header>
             {data.map((elem, i) => (
                 <View key={i}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Info")}>
-                        <View style={styles.view} >
-                            <View style={{flexDirection:"row"}}>
-                                <TouchableOpacity >
-                                <Icon1 name="options-vertical" size={24}  style={{ left: 220,top:6}}/>
-                                </TouchableOpacity>
-                                <Icon name="date" size={24} style={{left:-86,top:2,color:'#74b9ff'}}/>
-                                <Text style={{left:-80,top:10}}>Depart on {elem.date1} </Text>
-                            </View>
-                            <View style={{
-                                top: 115,
-                                borderWidth: 0.2,
-                                borderColor: "#D6D6D6",
-                                alignSelf: 'stretch'
-                            }} />
-                            <View style={{ marginHorizontal: 5, right: 130, top: 90 }}>
-                                <TouchableOpacity onPress={() => console.log("work")}>
-                                    <Avatar.Image size={45} source={require('../assets/jj.jpg')} style={{ top: 30 }} />
-                                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Mycolis", { idcolis: elem.id })}>
 
-                            </View>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', top: -102 }}>
-                                <SafeAreaView style={{ width: 145, height: 80, top: -5, right: 10, }}>
-                                    <Text style={{ fontWeight: 'bold', top: 80 }}>{elem.from}</Text>
+                        <View style={styles.view} >
+
+                            <TouchableOpacity onPress={()=>navigation.navigate ("Confirme",{ idcolis: elem.id })}>
+                                <Icon4 name="notifications" style={{ left: 140, top: 10, color: "#137DC5" }} size={26} />
+                            </TouchableOpacity>
+                            <Icon name="date" size={24} style={{
+                                left: -140, color: '#74b9ff', top: -20
+                            }} />
+                            <Text style={{ top: -40, left: -30 }}>Depart on {elem.date1} </Text>
+
+
+
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', top: -20, left: 15 }}>
+                                <SafeAreaView style={{ width: 145, height: 80, top: 16, right: 10, }}>
+                                    <Text style={{ fontWeight: 'bold' }}>{elem.from}</Text>
                                 </SafeAreaView>
 
 
-                                <FlightIcon name='flight' size={40} color="#000" style={{ transform: [{ rotate: '90deg' }], right: 60, top: 20 }} />
-                                <SafeAreaView style={{ width: 120, height: 80, top: 75, left: 10 }}>
+                                <FlightIcon name='flight' size={40} color="#74b9ff" style={{ transform: [{ rotate: '90deg' }], left: -36 }} />
+                                <SafeAreaView style={{ width: 120, height: 80, top: 16 }}>
                                     <Text style={{
                                         fontWeight: 'bold',
 
                                     }}>{elem.to}</Text>
                                 </SafeAreaView>
 
+
                             </View>
+                            <View style={{ top: -10, flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', }}>
 
+                                <Icon3 name="bag-suitcase-outline" size={28} style={{ top: -5, color: "#74b9ff", left: -76 }} />
+                                <Text style={{ fontWeight: 'bold', left: -80 }}>{elem.poidDispo} kg</Text>
 
+                                <Icon2 name="attach-money" size={25} style={{ left: 65, color: "#74b9ff", top: -3 }} />
+                                <Text style={{ fontWeight: 'bold', left: 63 }}>{elem.price} Dinar/kg</Text>
+                            </View>
 
                         </View>
                     </TouchableOpacity>
 
-                </View>
-            ))}
 
-        </ScrollView>
+                </View >
+
+            ))
+            }
+
+
+        </ScrollView >
     )
 }
 const styles = StyleSheet.create({
@@ -89,7 +109,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        height: 200,
+        height: 180,
         width: 330,
         borderRadius: 15,
         justifyContent: 'center',
@@ -98,9 +118,17 @@ const styles = StyleSheet.create({
         shadowRadius: 5.46,
         elevation: 9,
         borderColor: '#FFF',
-        marginVertical: 20
+        marginVertical: 20,
 
 
+
+    },
+    footerContainer: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: "white",
+        width: 200,
+        height: 200
     },
     icon: {
         display: 'flex',

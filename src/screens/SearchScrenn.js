@@ -46,7 +46,7 @@ const SearchScrenn = ({ navigation }) => {
         try {
             console.log("json")
             const response = await fetch(
-                'https://8y04y.mocklab.io/json/1', {
+                'https://kg5w9.mocklab.io/json/1', {
                 method: 'Get',
             }
 

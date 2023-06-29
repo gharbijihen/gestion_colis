@@ -5,39 +5,25 @@ import Background from '../components/Background'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Fontisto'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { auth } from "../Services/Auth/Firebase";
-// import { signInWithEmailAndPassword } from 'firebase/auth';
-// import { login } from '../features/auth/authSlice';
+
 import axios from 'axios';
 import { API_URL } from '../helpers/Api';
 export default function SignINScreen({ navigation }) {
 
   const [passwordVisible, setPasswordVisible] = useState(true);
-
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [brcolor, setbrcolor] = useState("#c1c1c1")
 
-  // const handleSignin = () => {
-  //   if (email === "") {
-  //     setbrcolor("#FF1111")
-  //   } else {
-  //     setbrcolor("#C1C1C1")
-  //   }
-  //   if (email !== "" && password !== "") {
-
-  //     signInWithEmailAndPassword(auth, email, password).then(() =>
-
-  //     navigation.navigate("Tab")
-  //   ).catch((err) => Alert.alert("wrong email/password plais try egain"))
-  //   console.log("email", email)
-  //   console.log("password", password)
-  // }
-  // }
+  const isFormValid = () => {
+    // add validation rules here
+    return  email !== '' && password !== '' 
+  };
   async function _storeUser(id) {
     console.log(id)
     try {
       await AsyncStorage.setItem('userId', id + "")
+      console.log(id,"id userconnect")
     } catch (e) {
       // Error saving data
     }
@@ -80,7 +66,7 @@ export default function SignINScreen({ navigation }) {
         <View
           style={{ width: 150, height: 150, top: -70, borderRadius: 40, justifyContent: 'center', alignSelf: 'center', backgroundColor: "#fff" }}
         >
-          <Icon name="user-o" size={80} color="#060606" style={{ marginLeft: 35, marginVertical: 30 }} />
+          <Icon name="user-o" size={80} color="#060606" style={{ marginLeft: 40, marginVertical: 30 }} />
         </View>
 
         <SafeAreaView style={[styles.view, { top: -40 }]}>
@@ -89,7 +75,7 @@ export default function SignINScreen({ navigation }) {
           <TextInput style={[styles.input, { borderColor: brcolor, }]}
             placeholder="Your email adress"
             onChangeText={(email) => setEmail(email)}
-            value={email}
+            value={email} 
             keyborardType="email-adress" />
           <Icon2 name="email" size={20} color="#9AA5B1" style={[styles.icon,{top: 54,}]} />
           <Text style={{ color: '#3E4C59', marginRight: 180, fontWeight: 'bold', marginVertical: 5 }}>Password</Text>
@@ -107,8 +93,8 @@ export default function SignINScreen({ navigation }) {
 
         </SafeAreaView>
         <SafeAreaView style={[styles.view, { top: 30 }]}>
-          <Button bgcolor="#81C6ED" textColor='#fff' btnLabel={"LOG IN"} marginTop={'40'}
-            press={handleSignin} width={250}
+          <Button bgcolor="#137DC5" textColor='#fff' btnLabel={"LOG IN"} marginTop={'40'}
+            press={handleSignin} width={250}  disabled={(!isFormValid())}
           />
           <View style={{ display: 'flex', flexDirection: 'row' }}>
             <Text style={{ fontWeight: 'bold', fontSize: 16 }}> Don't have an account ?</Text>

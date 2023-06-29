@@ -14,6 +14,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../helpers/Api';
 import Favoris from '../screens/Favoris';
+import ChatRoom from '../screens/ChatRoom';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -40,7 +42,8 @@ function ChatBox() {
 
 const Tabnavigation = ({ route, navigation }) => {
 
-
+  const userId = AsyncStorage.getItem('userId')
+  console.log(userId,"tabb===>")
 
   return (
     <Tab.Navigator
@@ -53,9 +56,10 @@ const Tabnavigation = ({ route, navigation }) => {
       <Tab.Screen
         name="Home"
         component={Home} 
+        initialParams={{ userId: userId}}
         options={{
           tabBarLabel: 'Home',
-
+         
           tabBarIcon: ({ color }) => (
             <Icon name="ios-home" color={color} size={26} />
           ),
@@ -81,8 +85,8 @@ const Tabnavigation = ({ route, navigation }) => {
         }}
       />
       <Tab.Screen
-        name="chat"
-        component={ChatBox}
+        name="chat Room"
+        component={ChatRoom}
         options={{
           tabBarLabel: 'Chat',
           tabBarIcon: ({ color }) => (
@@ -93,6 +97,7 @@ const Tabnavigation = ({ route, navigation }) => {
       <Tab.Screen
         name="Update"
         component={Seeting}
+        initialParams={{ userId:userId }}
         options={{
           tabBarLabel: 'Updates',
           tabBarIcon: ({ color }) => (

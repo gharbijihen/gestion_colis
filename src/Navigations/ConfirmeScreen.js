@@ -1,76 +1,30 @@
-// import { View, Text ,TouchableOpacity,StyleSheet} from 'react-native'
-// import React from 'react'
- import Ionicons from 'react-native-vector-icons/SimpleLineIcons'
- import { useNavigation } from '@react-navigation/native';
-export function Heade() {
-    const navigation = useNavigation();
-    return (
-      <View style={{ alignContent: 'flex-start', backgroundColor: "#74b9ff", height: 60 }}>
-        <View style={{ flexDirection: 'row', }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-left" size={22} color="#FFFF" style={{ top: 20, left: 10 }} />
-          </TouchableOpacity>
-  
-          <Text style={{ alignSelf: 'center', top: 15, left: 28, fontSize: 24, fontWeight: '400', color: '#FFFF' }} > Notification</Text>
-        </View>
-      </View>
-    )
-  };
 
-// export default function Notification({navigation}) {
-//   return (
-//     <View>
-//       <Heade></Heade>
-//       <View style={{width:400,borderColor: '#000',height:50 , borderWidth: 1, backgroundColor: '#fff',}}>
-        
-//       </View>
-//     </View>
-//   )
-// }
-// const styles = StyleSheet.create({
-//     view: {
-//         flex: 1,
-//         alignSelf: 'center',
-//         alignItems: 'center',
-//         backgroundColor: '#fff',
-//         height: 302,
-//         width: 400,
-//         borderRadius: 15,
-//         justifyContent: 'center',
-//         borderColor: '#000',
-//         borderWidth: 1,
-//         shadowRadius: 5.46,
-//         elevation: 9,
-//         borderColor: '#FFF',
-//         marginVertical: 20
-
-
-//     },
-// })
 import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '../helpers/Api';
+import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/SimpleLineIcons'
 
-
-const Notifications = ({navigation}) => {
+export default function ConfirmeScreen({route }) {
+  const navigation = useNavigation();
   const [notifications, setNotifications] = useState([]);
 
-
+  const { idcolis } = route.params || {};
 
 
   useEffect(() => {
-      const value =  AsyncStorage.getItem('id');
-  console.log(value);
+    console.log("aaaba")
     const fetchNotifications = async () => {
+      const headers = {
+        'Accept': 'application/json',
+    }
+    console.log(idcolis,"abbbbaba")
       try {
-        const headers = {
-          'Accept': 'application/json',
-      }
         const response = await axios.get(
-          `${API_URL}/reservations/getbyid/${value}`, { headers: headers }
+          `${API_URL}/reservation/getReservationColis/${idcolis}`, { headers: headers }
         );
         setNotifications(response.data);
       } catch (error) {
@@ -86,7 +40,6 @@ const Notifications = ({navigation}) => {
 
   const handleAccept = id => {
     // Code pour accepter la demande
-    // console.log("Accepter la demande "${id}") 
     const updatedNotifications = notifications.filter(
       notification => notification.id !== id,
     );
@@ -95,16 +48,30 @@ const Notifications = ({navigation}) => {
 
   const handleReject = id => {
     // Code pour refuser la demande
-    console.log("Refuser la demande ${id}");
     const updatedNotifications = notifications.filter(
       notification => notification.id !== id,
     );
     setNotifications(updatedNotifications);
   };
+  const  Header = () => {
+    const navigation = useNavigation();
+  
+    return (
+      <View style={{backgroundColor:"#74b9ff",height:60}}>
+      <Text style={{fontWeight:'400',color:"white",alignSelf:"center",top:15,fontSize: 20,}}>Notifications</Text>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-left" size={22} color="#FFFF" style={{ top: 20, left: 10,top:-10 }} />
+          </TouchableOpacity>
+      </View>
+    )
+  
+  
+  }
 
   return (
     <View style={styles.container}>
-      <Heade/>
+       <Header></Header>
+
       {notifications.map(notification => (
         <View style={styles.notificationContainer} key={notification.id}>
           <Text style={styles.notificationText}>
@@ -135,18 +102,19 @@ const Notifications = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'White',
-   
-  },
-  header: {
-    backgroundColor: 'black',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    height: 60,
-  },
+    backgroundColor: '#FFFF',
  
-  
+  },
+  backButton: {
+    marginRight: 10,
+    paddingVertical: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#F7D712',
+    marginBottom: 10,
+  },
   notificationContainer: {
     backgroundColor: '#ECECEC',
     borderRadius: 5,
@@ -191,5 +159,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default Notifications;

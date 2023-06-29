@@ -8,8 +8,8 @@ export default function Welcome({navigation})  {
   useEffect(()=>{
     const value =  AsyncStorage.getItem('userId')
   setTimeout(()=>{ 
-    if( value =="" ){
-      navigation.navigate("Start")
+    if( value == "" ){
+      navigation.navigate("Logo")
     }else{
       navigation.navigate("Tab")
     }
